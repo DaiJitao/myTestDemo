@@ -19,7 +19,6 @@ public class DeamMain {
         }
     }
 
-
     public static void main(String[] args) {
         Thread t = new DaemonT();
         //t.setDaemon(true);
