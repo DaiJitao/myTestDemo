@@ -4,7 +4,7 @@ import person.test.tree.Tree;
 
 import java.security.cert.TrustAnchor;
 
-public class DeamMain {
+public class DaemonThreadTDemo {
     public static class DaemonT extends Thread{
         @Override
         public void run() {
