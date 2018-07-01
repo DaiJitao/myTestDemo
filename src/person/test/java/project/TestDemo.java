@@ -15,5 +15,9 @@ public class TestDemo {
         System.out.println(System.getProperty("java.version"));
         System.out.println((Integer)129 == (Integer)129);
         System.out.println(1L << 65L);
+
+        int v = 'A' / 'a' > 1 ? 4:5;
+        v += 'A';
+        System.out.println("v " + v);
     }
 }

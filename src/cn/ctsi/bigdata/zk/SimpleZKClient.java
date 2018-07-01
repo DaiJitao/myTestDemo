@@ -12,7 +12,7 @@ public class SimpleZKClient {
             public void process(WatchedEvent event) {
             }
         });
-        zkClient.create();
+
 
     }
 }
