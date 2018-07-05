@@ -15,7 +15,7 @@ public class ServiceServer {
             Socket socket = server.accept();
             ServiceServerTask task = new ServiceServerTask(socket);
             new Thread(task).start();
-            System.out.println("县城完毕。。。");
+            System.out.println("线程完毕。。。");
         }
     }
 }
