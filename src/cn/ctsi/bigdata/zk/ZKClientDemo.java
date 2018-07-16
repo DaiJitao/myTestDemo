@@ -25,10 +25,16 @@ public class ZKClientDemo {
             }
         };
 
-        ZooKeeper zkCLient = new ZooKeeper("localhost:2181", ClientBase.CONNECT_TIMEOUT, watcher);
-        zkCLient.create("/daijitao/hello", "hello daijitao".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        // 创建一个与服务器的连接  并监控所触发的事件
+        ZooKeeper zkCLient = new ZooKeeper(hostPort, ClientBase.CONNECT_TIMEOUT, watcher);
+        //zkCLient.create("/daijitao/hello", "hello daijitao".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        // 创建一个目录节点
+        // zkCLient.create("/testRootPath", "testrootdata".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        // zkCLient.create("/testRootPath/childFirst", "childData".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         //zkCLient.create("/daijitao", "hello daijitao".getBytes(), -1);
-        System.out.println(zkCLient.getData("/daijitao", watcher, null));
+        System.out.println(zkCLient.getData("/daijitao", watcher, null).toString());
+        System.out.println(zkCLient.getData("/testRootPath", watcher, null));
+        System.out.println(zkCLient.getChildren("/testRootPath", watcher, null));
         zkCLient.close();
 
     }

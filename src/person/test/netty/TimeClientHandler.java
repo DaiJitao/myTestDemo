@@ -11,6 +11,6 @@ public class TimeClientHandler extends ChannelHandlerAdapter {
     private final ByteBuf firstMessage;
 
     public TimeClientHandler() {
-        firstMessage = Unpooled.buffer(re);
+        firstMessage = Unpooled.buffer();
     }
 }
