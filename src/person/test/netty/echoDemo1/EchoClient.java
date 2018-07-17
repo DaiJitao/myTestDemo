@@ -44,6 +44,6 @@ public class EchoClient {
     }
 
     public static void main(String[] args) {
-        new EchoClient("localhost", 20000).start();
+        new EchoClient("127.0.0.1", 20000).start();
     }
 }
