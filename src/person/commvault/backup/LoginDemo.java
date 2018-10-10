@@ -17,6 +17,7 @@ import java.util.Map;
  */
 public class LoginDemo {
     private static String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Login";
+    private static String loginOutUrl = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Logout";
 
     public static void main(String[] args) throws InterruptedException {
         //将map转换成jsonObject
@@ -26,22 +27,25 @@ public class LoginDemo {
         System.out.println(itemJSONObj.toJSONString());
         System.out.println(JSON.toJSONString(itemMap));
         System.out.println("========================>>>>");
+        System.out.println(getToken());
+    }
+
+    public static void loginOut(String token) {
+
+    }
+
+    public static String getToken() {
         Map<String, String> params = new HashMap<>();
         params.put("username", "admin");
-        params.put("password","UEBzc3cwcmQ=");
-        for (int i = 0; i < 10000; i++) {
-            Thread.sleep(0);
-            String result = LoginDemo.jsonPost(url, params);
-            if (JSONObject.parseObject(result).containsKey("token")){
-                System.out.println();
-                System.out.println((i + 1) + "次");
-                System.out.println(JSONObject.parseObject(result).get("token"));
-            } else {
-                break;
-            }
+        params.put("password", "UEBzc3cwcmQ=");
+
+        String result = new LoginDemo().jsonPost(url, params);
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        String token = null;
+        if (jsonObject.containsKey("token")) {
+            token = jsonObject.get("token").toString();
         }
-
-
+        return token;
     }
 
 
@@ -52,7 +56,7 @@ public class LoginDemo {
      * @param params
      * @return 成功:返回json字符串<br/>
      */
-    public static String jsonPost(String strURL, Map<String, String> params) {
+    public String jsonPost(String strURL, Map<String, String> params) {
         try {
             URL url = new URL(strURL);// 创建连接
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -81,7 +85,7 @@ public class LoginDemo {
             // 读取响应
             int length = (int) connection.getContentLength();// 获取长度
             if (length != -1) {
-                byte[] data = new byte[length];
+                byte[] data = new byte[length]; // 目的数组
                 byte[] temp = new byte[512];
                 int readLen = 0;
                 int destPos = 0;
@@ -98,5 +102,4 @@ public class LoginDemo {
         }
         return "error"; // 自定义错误信息
     }
-
 }
