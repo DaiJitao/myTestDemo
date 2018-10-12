@@ -7,7 +7,11 @@ import java.util.Map;
  * Created by daijitao on 2018/10/10.
  */
 public class ParamUtil {
+
     public static String getParam( Map<String, String> headers) {
+        if (headers == null || headers.size() == 0) {
+            return "";
+        }
         StringBuilder stringBuilder = new StringBuilder();
         Object[] keys = (Object[]) headers.keySet().toArray();
         Object[] values = (Object[])headers.values().toArray();
