@@ -12,8 +12,6 @@ import java.util.Map;
  * Created by daijitao on 2018/10/12.
  */
 public class StoragePolicyOP extends BackUpBase implements StoragePolicyBase {
-    HTTPUtil httpUtil = HTTPUtil.getInstance();
-    Map<String, String> headers = Common.getInstance().initHeaders();
 
     public static void main(String[] args) {
         StoragePolicyOP op = new StoragePolicyOP();
