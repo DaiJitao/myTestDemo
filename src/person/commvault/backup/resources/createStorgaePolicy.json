@@ -1,0 +1,15 @@
+{
+  "storagePolicyName": "name",
+  "storagePolicyCopyInfo": {
+    "retentionRules": {
+      "retainBackupDataForCycles": 2,
+      "retainBackupDataForDays": 6
+    },
+    "library": {
+      "libraryId": 1
+    },
+    "mediaAgent": {
+      "mediaAgentId": 3
+    }
+  }
+}

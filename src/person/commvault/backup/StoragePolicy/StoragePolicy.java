@@ -1,78 +1,120 @@
 package person.commvault.backup.StoragePolicy;
 
-import person.commvault.backup.BackUpBase;
-import person.commvault.backup.HTTPUtil;
-import person.commvault.backup.Token;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import person.commvault.backup.Storage.Resource.Library;
+import person.commvault.backup.Storage.Resource.MediaAgent;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by daijitao on 2018/10/12.
+ * Created by daijitao on 2018/10/15.
  */
-public class StoragePolicy  extends BackUpBase implements StoragePolicyBase{
-    private static final String token = Token.getToken();
-    private Map<String, String> headers = new HashMap<>();
-
-    private void initHeaders() {
-        headers.put("Accept", "application/json");
-        headers.put("Content-Type", "application/json");
-        headers.put("Authtoken", token);
-    }
-
+public class StoragePolicy {
     public static void main(String[] args) throws Exception {
-        StoragePolicy sp = new StoragePolicy();
-        //System.out.println(sp.getStoragePolicy());
-        System.out.println(sp.deleteStoragePolicyByName("test_sp1"));
+        MediaAgent mediaAgent = new MediaAgent();
+        mediaAgent.setMediaAgentId(2);
+        Library library = new Library();
+        library.setLibraryId(7);
+        RetentionRule retentionRule = new RetentionRule(2, 12);
+
+        StoragePolicyCopyInfo storagePolicyCopyInfo = new StoragePolicyCopyInfo();
+        storagePolicyCopyInfo.setLibrary(library);
+        storagePolicyCopyInfo.setMediaAgent(mediaAgent);
+        storagePolicyCopyInfo.setRetentionRules(retentionRule);
+
+
+        StoragePolicy storagePolicy = new StoragePolicy();
+        storagePolicy.setStoragePolicyName("dai4");
+        storagePolicy.setStoragePolicyCopyInfo(storagePolicyCopyInfo);
+
+
+
+
+        StoragePolicyOP op = new StoragePolicyOP();
+        //String test = op.createStoragePolicy(storagePolicy);
+        // System.out.println(JSONObject.parseObject(test));
+        boolean del = op.deleteStoragePolicyByName("dai3");
+        System.out.println(del);
+
+        String test = op.getStoragePolicy();
+        System.out.println(test);
 
     }
+    private String storagePolicyName;
+    private StoragePolicyCopyInfo storagePolicyCopyInfo;
 
-    /**
-     * 只列出 {"storagePolicyName":"Default Virtualization plan","storagePolicyId":11}
-     *
-     * @return
-     */
-    @Override
-    public String getStoragePolicy() {
-        initHeaders();
-        String content = HTTPUtil.doGet(GETSPUrl, headers, null);
-        return content;
+    public String getStoragePolicyName() {
+        return storagePolicyName;
     }
 
-    @Override
-    public String createStoragePolicyByID(String id) {
-        return null;
+    public void setStoragePolicyName(String storagePolicyName) {
+        this.storagePolicyName = storagePolicyName;
     }
 
-    public String getStoragePolicyById(String id) throws Exception {
-        if (id.length() == 0 || id == null) {
-            throw new Exception("传入的存储策略id不合法");
-        }
-        initHeaders();
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/StoragePolicy/" + id;
-        String content = HTTPUtil.doGet(url, headers, null);
-        return content;
+    public StoragePolicyCopyInfo getStoragePolicyCopyInfo() {
+        return storagePolicyCopyInfo;
     }
 
-    @Override
-    public boolean updateStoragePolicy() {
-        return false;
+    public void setStoragePolicyCopyInfo(StoragePolicyCopyInfo storagePolicyCopyInfo) {
+        this.storagePolicyCopyInfo = storagePolicyCopyInfo;
+    }
+}
+
+class StoragePolicyCopyInfo {
+   private RetentionRule retentionRules;
+   private Library library;
+   private MediaAgent mediaAgent;
+
+    public RetentionRule getRetentionRules() {
+        return retentionRules;
     }
 
-    @Override
-    public boolean deleteStoragePolicyByName(String name) throws Exception {
-        if (name.length() == 0 || name == null) {
-            throw new Exception("传入的存储策略name不合法");
-        }
-        initHeaders();
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/StoragePolicy/" + name;
-        String content = HTTPUtil.doDelete(url, headers, null);
-        System.out.println(content);
-        if (content.contains("errorMessage")) {
-            return false;
-        }
-        return true;
+    public void setRetentionRules(RetentionRule retentionRules) {
+        this.retentionRules = retentionRules;
     }
 
+    public Library getLibrary() {
+        return library;
+    }
 
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
+
+    public MediaAgent getMediaAgent() {
+        return mediaAgent;
+    }
+
+    public void setMediaAgent(MediaAgent mediaAgent) {
+        this.mediaAgent = mediaAgent;
+    }
+}
+
+class RetentionRule{
+    private int retainBackupDataForCycles;
+    private int retainBackupDataForDays;
+
+    public RetentionRule(int cycles, int days){
+        this.retainBackupDataForCycles = cycles;
+        this.retainBackupDataForDays = days;
+    }
+
+    public int getRetainBackupDataForCycles() {
+        return retainBackupDataForCycles;
+    }
+
+    public void setRetainBackupDataForCycles(int retainBackupDataForCycles) {
+        this.retainBackupDataForCycles = retainBackupDataForCycles;
+    }
+
+    public int getRetainBackupDataForDays() {
+        return retainBackupDataForDays;
+    }
+
+    public void setRetainBackupDataForDays(int retainBackupDataForDays) {
+        this.retainBackupDataForDays = retainBackupDataForDays;
+    }
 }
