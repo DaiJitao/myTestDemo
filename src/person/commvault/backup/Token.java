@@ -14,10 +14,19 @@ public class Token {
     private static String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Login";
     private static String loginOutUrl = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Logout";
 
+    public static void main(String[] args) {
+        System.out.println(Token.getToken(Common.getInstance().initUser()));
+    }
+
     public static void loginOut(String token) {
 
     }
 
+    /**
+     *
+     * @param params 用户名和密码
+     * @return
+     */
     public static String getToken(Map<String, String> params) {
         HTTPUtil httpUtil = HTTPUtil.getInstance();
         String result = httpUtil.doPostJsonLogin(url, params);

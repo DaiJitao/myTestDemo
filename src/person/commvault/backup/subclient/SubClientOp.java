@@ -14,7 +14,7 @@ public class SubClientOp extends BackUpBase {
 
     public static void main(String[] args) throws Exception {
         String result = new SubClientOp().getSubclientByClientName("192.168.56.128");
-        result = new SubClientOp().runBackUp("12", BackupLevel.FULL);
+
         System.out.println(result);
     }
 
@@ -52,5 +52,10 @@ public class SubClientOp extends BackUpBase {
         String result = "";
         result = httpUtil.doPostJson(url, headers, null);
         return result;
+    }
+
+    public String createSubClient(){
+        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient";
+        return "";
     }
 }

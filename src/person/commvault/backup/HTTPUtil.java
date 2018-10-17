@@ -275,8 +275,58 @@ public class HTTPUtil {
         return "";
     }
 
-    public String doPostXML(String strURL, Map<String, String> params) {
-        return null;
+    public String doPostXML(String strURL, String params) {
+        OutputStreamWriter out = null;
+        InputStream is = null;
+        try {
+            URL url = new URL(strURL);// 创建连接
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true); // 允许写出
+            connection.setDoInput(true); // 允许读入
+            connection.setUseCaches(false);// 不适用缓存
+            connection.setInstanceFollowRedirects(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Content-Type", "application/xml");
+            connection.connect();
+            out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+            out.append(params);//JSONUtil.object2JsonString(params));
+            out.flush();
+
+            int code = connection.getResponseCode();
+
+            if (code == 200) {
+                is = connection.getInputStream();
+            } else {
+                is = connection.getErrorStream();
+            }
+
+            // 读取响应
+            int length = connection.getContentLength();// 获取长度
+            if (length != -1) {
+                byte[] data = new byte[length]; // 目的数组
+                byte[] temp = new byte[512];
+                int readLen = 0;
+                int destPos = 0;
+                while ((readLen = is.read(temp)) > 0) {
+                    System.arraycopy(temp, 0, data, destPos, readLen);
+                    destPos += readLen;
+                }
+                String result = new String(data, "UTF-8"); // utf-8编码
+                return result;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
     }
 
     public String doPostTextPlain(String strURL, Map<String, String> params) {

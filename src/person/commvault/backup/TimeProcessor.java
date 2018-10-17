@@ -1,15 +1,20 @@
 package person.commvault.backup;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeProcessor {
     public static void main(String[] args) {
         System.out.println(getInstance().dateFormConvert(new BigInteger(String.valueOf(1378180800))));
-        long ms = 1539079351000L;
+        long ms = 1534472426000L;
         Date date = new Date(ms);
         System.out.println(date);
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        System.out.println(sdf.format(date));
     }
+
+
 
     private static TimeProcessor instance = new TimeProcessor();
 	private TimeProcessor(){}
