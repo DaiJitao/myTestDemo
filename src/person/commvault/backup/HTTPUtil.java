@@ -56,11 +56,12 @@ public class HTTPUtil {
             if (sendParam.length() != 0) {
                 urlNameString = url + "?" + sendParam;
             }
+            System.out.println("URL: " + urlNameString);
             URL realUrl = new URL(urlNameString);
             HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             connection.setRequestMethod("GET");
             // 设置通用的请求属性
-            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            // connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             connection.setRequestProperty("Accept", headers.get("Accept")); // 设置接收数据的格式
             connection.setRequestProperty("Content-Type", headers.get("Content-Type")); // 设置发送数据的格式
             connection.setRequestProperty("Authtoken", headers.get("Authtoken"));
@@ -275,7 +276,7 @@ public class HTTPUtil {
         return "";
     }
 
-    public String doPostXML(String strURL, String params) {
+    public String doPostXML(String strURL, String token, String params) {
         OutputStreamWriter out = null;
         InputStream is = null;
         try {
@@ -288,13 +289,14 @@ public class HTTPUtil {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/xml");
+            connection.setRequestProperty("Authtoken", token);
             connection.connect();
             out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
             out.append(params);//JSONUtil.object2JsonString(params));
             out.flush();
 
             int code = connection.getResponseCode();
-
+            System.out.println("code:" + code);
             if (code == 200) {
                 is = connection.getInputStream();
             } else {

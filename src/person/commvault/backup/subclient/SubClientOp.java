@@ -1,5 +1,6 @@
 package person.commvault.backup.subclient;
 
+import access.vcenter.mob.Statistics2;
 import person.commvault.backup.BackUpBase;
 import person.commvault.backup.Common;
 import person.commvault.backup.HTTPUtil;
@@ -13,9 +14,16 @@ import java.util.Map;
 public class SubClientOp extends BackUpBase {
 
     public static void main(String[] args) throws Exception {
-        String result = new SubClientOp().getSubclientByClientName("192.168.56.128");
 
-        System.out.println(result);
+        System.out.println("所有的虚机");
+        Statistics2.printAllVms();
+        SubClientOp subClientOp = new SubClientOp();
+        String result = subClientOp.getSubclientByClientName("192.168.56.128");
+
+        System.out.println("所有的子客户端 " + result);
+        String result2 = subClientOp.getVmBySubClientID("73");
+        System.out.println("子客户端关联的虚机 " + result2);
+
     }
 
     public String getSubclientByClientId(String clientId) throws Exception {
@@ -47,14 +55,28 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("传入的subclientId错误");
         }
 
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient/" + subclientId +"/action/backup?backupLevel=" + level.getLevel();
+        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient/" + subclientId + "/action/backup?backupLevel=" + level.getLevel();
 
         String result = "";
         result = httpUtil.doPostJson(url, headers, null);
         return result;
     }
 
-    public String createSubClient(){
+
+    //查询子客户端关联的某一个虚机
+    public String getVmBySubClientID(String subclientId) {
+
+
+        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient/"+ subclientId +"/Browse";
+        Map<String, String> params = new HashMap<>();
+        params.put("path", "%5c" + "503c4f69-5bb7-9f4b-57fb-d0d98114f837");
+        params.put("showDeletedFiles", "true");
+        params.put("vsDiskBrowse", "true");
+        String result = httpUtil.doGet(url, headers, params);
+        return result;
+    }
+
+    public String createSubClient() {
         String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient";
         return "";
     }

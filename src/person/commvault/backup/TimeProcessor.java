@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeProcessor {
+
     public static void main(String[] args) {
         System.out.println(getInstance().dateFormConvert(new BigInteger(String.valueOf(1378180800))));
         long ms = 1534472426000L;
@@ -12,6 +13,9 @@ public class TimeProcessor {
         System.out.println(date);
         SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         System.out.println(sdf.format(date));
+        Date date1 = new Date();
+        System.out.println(date1.getTime()); // 毫秒
+        System.out.println(Thread.currentThread().getPriority());
     }
 
 
