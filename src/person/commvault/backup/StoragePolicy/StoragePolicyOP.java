@@ -13,8 +13,10 @@ import java.util.Map;
  */
 public class StoragePolicyOP extends BackUpBase implements StoragePolicyBase {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         StoragePolicyOP op = new StoragePolicyOP();
+
+        //System.out.println(op.deleteStoragePolicyByName("test2"));
         System.out.println(op.getStoragePolicy());
     }
 

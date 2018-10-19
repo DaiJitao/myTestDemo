@@ -11,8 +11,8 @@ import java.util.Map;
 public class JobOp extends BackUpBase {
     public static void main(String[] args) throws Exception{
         JobOp jobOp = new JobOp();
-        System.out.println(jobOp.queryJob("4", null, JobCategory.FINISHED, JobFilter.RESTORE));
-        System.out.println(jobOp.getJobById("24"));
+        System.out.println(jobOp.queryJob("4", null, JobCategory.FINISHED, JobFilter.BACKUP));
+        System.out.println(jobOp.getJobById("2250"));
 
     }
 

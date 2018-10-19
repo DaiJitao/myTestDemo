@@ -15,7 +15,7 @@ public class SchedulePolicyOp extends BackUpBase {
 
     public static void main(String[] args) throws Exception {
         String result = new SchedulePolicyOp().getSchedulePolicy();
-        System.out.println(result);
+        System.out.println("所有的计划策略\n" + result);
         JSONObject object = JSONObject.parseObject(result);
         JSONArray array = object.getJSONArray("taskDetail");
         int size = array.size();
