@@ -27,7 +27,7 @@ public class SubClientOp extends BackUpBase {
         System.out.println("所有的子客户端 " + result);
         String result2 = subClientOp.getVmBySubClientID("73");
         System.out.println("子客户端关联的虚机 " + result2);
-        result2 = subClientOp.getSubclientBackupHistory("4", "73");
+        result2 = subClientOp.getBackupHistory("4", "73");
         System.out.println(JSONObject.parseObject(result2));
 
     }
@@ -85,7 +85,7 @@ public class SubClientOp extends BackUpBase {
         return "";
     }
 
-    public String getSubclientBackupHistory(String clientId, String subclientId) throws Exception{
+    public String getBackupHistory(String clientId, String subclientId) throws Exception{
         if (null == clientId || clientId.length() == 0){
             throw new Exception("error clientId传入参数为空");
         }
