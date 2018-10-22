@@ -1,0 +1,9 @@
+<JobManager_JobListRequest scope="1" category="2">
+    <pagingConfig sortField="jobId" />
+    <jobFilter completedJobLookupTime="7776000" showAgedJobs="0">
+        <jobTypeList val="4"/>
+        <jobTypeList val="14"/>
+        <entity subclientId="%subclientId%"/>
+        <clientList clientId="%clientId%"/>
+    </jobFilter>
+</JobManager_JobListRequest>
