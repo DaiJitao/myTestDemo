@@ -3,10 +3,7 @@ package person.commvault.backup.subclient;
 import access.vcenter.mob.Statistics2;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.zookeeper.Login;
-import person.commvault.backup.BackUpBase;
-import person.commvault.backup.Common;
-import person.commvault.backup.HTTPUtil;
-import person.commvault.backup.Token;
+import person.commvault.backup.*;
 import person.commvault.backup.utils.LoginUtil;
 
 import java.util.HashMap;
@@ -37,7 +34,7 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("传入的clientID错误");
         }
         String result = "";
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient";
+        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
         Map<String, String> params = new HashMap<>();
         params.put("clientId", clientId);
         result = httpUtil.doGet(url, headers, params);
@@ -49,7 +46,7 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("传入的clientID错误");
         }
         String result = "";
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient";
+        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
         Map<String, String> params = new HashMap<>();
         params.put("clientName", clientName);
         result = httpUtil.doGet(url, headers, params);
@@ -61,7 +58,7 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("传入的subclientId错误");
         }
 
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient/" + subclientId + "/action/backup?backupLevel=" + level.getLevel();
+        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient/" + subclientId + "/action/backup?backupLevel=" + level.getLevel();
 
         String result = "";
         result = httpUtil.doPostJson(url, headers, null);
@@ -71,7 +68,7 @@ public class SubClientOp extends BackUpBase {
 
     //查询子客户端关联的某一个虚机
     public String getVmBySubClientID(String subclientId) {
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient/"+ subclientId +"/Browse";
+        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient/"+ subclientId +"/Browse";
         Map<String, String> params = new HashMap<>();
         params.put("path", "%5c" + "503c4f69-5bb7-9f4b-57fb-d0d98114f837");
         params.put("showDeletedFiles", "true");
@@ -81,7 +78,7 @@ public class SubClientOp extends BackUpBase {
     }
 
     public String createSubClient() {
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient";
+        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
         return "";
     }
 
@@ -97,7 +94,7 @@ public class SubClientOp extends BackUpBase {
         xml = LoginUtil.replaceXmlValue(xml, "clientId", clientId);
         xml = LoginUtil.replaceXmlValue(xml, "subclientId", subclientId);
         String content = "";
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/jobs";
+        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/jobs";
         content = httpUtil.doPostXML(url, headers.get("Authtoken"), xml);
         return content;
     }
