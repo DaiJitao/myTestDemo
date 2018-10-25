@@ -1,17 +1,14 @@
 package person.commvault.backup.utils;
 
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.*;
-import java.util.*;
 
-public class LoginUtil {
+public class XMLUtil {
 
     public static void main(String[] args) throws Exception {
-        String result = LoginUtil.getXml("");
+        String result = XMLUtil.getXml("");
         System.out.println(result);
-        System.out.println(LoginUtil.replaceXmlValue(result, "toTime", "1234567890-"));
+        System.out.println(XMLUtil.replaceXmlValue(result, "toTime", "1234567890-"));
     }
 
     /**

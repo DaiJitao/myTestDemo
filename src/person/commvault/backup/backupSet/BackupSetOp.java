@@ -15,7 +15,7 @@ public class BackupSetOp extends BackUpBase {
         if (clientId.length() == 0 || clientId == null) {
             throw new Exception("传入的clienId不合法");
         }
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Backupset";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Backupset";
 
         Map<String, String> params = new HashMap<>();
         params.put("clientId", clientId);

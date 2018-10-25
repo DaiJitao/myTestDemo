@@ -3,7 +3,6 @@ package person.commvault.backup.SchedulePolicy;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import person.commvault.backup.BackUpBase;
-import person.commvault.backup.backupSet.BackupSetOp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class SchedulePolicyOp extends BackUpBase {
 
     // 列举出console显示的计划策略，没有定时任务信息
     public String getSchedulePolicy() {
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/SchedulePolicy";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/SchedulePolicy";
         String result = "";
         result = httpUtil.doGet(url, headers, null);
         return result;

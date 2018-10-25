@@ -2,8 +2,6 @@ package person.commvault.backup.StoragePolicy;
 
 import com.alibaba.fastjson.JSONObject;
 import person.commvault.backup.BackUpBase;
-import person.commvault.backup.Common;
-import person.commvault.backup.HTTPUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +34,7 @@ public class StoragePolicyOP extends BackUpBase implements StoragePolicyBase {
         if (id.length() == 0 || id == null) {
             throw new Exception("传入的存储策略id不合法");
         }
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/StoragePolicy/" + id;
+        String url = CommVault_SERVER_URL +  "/SearchSvc/CVWebService.svc/StoragePolicy/" + id;
         String content = httpUtil.doGet(url, headers, null);
         return content;
     }
@@ -47,7 +45,7 @@ public class StoragePolicyOP extends BackUpBase implements StoragePolicyBase {
      */
     public String createStoragePolicy(StoragePolicy sp) {
         String result = "";
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/StoragePolicy";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/StoragePolicy";
         Map<String, String> params = new HashMap<>();
         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(sp);
         params.put("jsonType", jsonObject.toJSONString());
@@ -66,7 +64,7 @@ public class StoragePolicyOP extends BackUpBase implements StoragePolicyBase {
             throw new Exception("传入的存储策略name不合法");
         }
 
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/StoragePolicy/" + name;
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/StoragePolicy/" + name;
         String content = httpUtil.doDelete(url, headers, null);
         System.out.println(content);
         if (content.contains("errorMessage")) {

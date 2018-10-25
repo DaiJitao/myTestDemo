@@ -8,7 +8,9 @@ import java.util.Properties;
  * Created by daijitao on 2018/10/25.
  */
 public class Configuration {
+    private final String CONF = "conf.properties";
     private Properties properties = new Properties();
+
     public static void main(String[] args) throws Exception {
         //System.out.println(Main.class.getResource("test.properties"));// 加载类所在的目录文件
         //properties.load(Main.class.getResourceAsStream("1conf.properties"));// 加载类所在的目录文件
@@ -16,13 +18,23 @@ public class Configuration {
         //System.out.println(Main.class.getClassLoader().getResource("")); // 加载根项目下的文件myTestDemo/name.filetype
         Configuration configuration = new Configuration();
 
-        configuration.init("conf.properties");
-        String test = configuration.getIP("ii");
+        configuration.init();
+        String test = configuration.getIP("password");
         System.out.println(test);
-
     }
 
-    public void init(String fileName) throws Exception {
+    /**
+     * 初始化配置文件
+     */
+    public void init()  {
+        try {
+            this.init(CONF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void init(String fileName) throws Exception {
         if (null == fileName || fileName.trim().length() == 0) {
             throw new Exception("文件名[" + fileName + "]不可为空");
         }

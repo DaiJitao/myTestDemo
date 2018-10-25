@@ -17,10 +17,10 @@ public class JobOp extends BackUpBase {
     }
 
     public String getJobById(String jobId) throws Exception{
-        if ( jobId == null || jobId.length() == 0){
+        if ( jobId == null || jobId.trim().length() == 0){
             throw new Exception("jobID错误");
         }
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Job/" + jobId;
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Job/" + jobId;
         String result = httpUtil.doGet(url, headers, null);
         return result;
     }

@@ -30,7 +30,7 @@ public class VirtualMachine extends BackUpBase {
             throw new Exception("");
         }
         String result = "";
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/DoBrowse";
+        String url =  CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/DoBrowse";
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<databrowse_BrowseRequest opType=\"browse\"><entity clientName=\"");
         stringBuilder.append(clientName);
@@ -57,7 +57,7 @@ public class VirtualMachine extends BackUpBase {
             throw new Exception("");
         }
         String result = "";
-        String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/DoBrowse";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/DoBrowse";
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<databrowse_BrowseRequest opType=\"0\"><entity subclientId=\"");
         stringBuilder.append(subClientID);

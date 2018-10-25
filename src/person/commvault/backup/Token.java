@@ -1,21 +1,21 @@
 package person.commvault.backup;
 
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by daijitao on 2018/10/9.
  */
-public class Token {
-    private static String url = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Login";
-    private static String loginOutUrl = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Logout";
+public class Token extends BackUpBase{
+    private static String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Login";
+    private static String loginOutUrl = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Logout";
 
     public static void main(String[] args) {
-        System.out.println(Token.getToken(Common.getInstance().initUser()));
+        CommConf common = CommConf.getInstance();
+        Map<String, String> params = common.initUser();
+        System.out.println(Token.getToken(params));
     }
 
     public static void loginOut(String token) {

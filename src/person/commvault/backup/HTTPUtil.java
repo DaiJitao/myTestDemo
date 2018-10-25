@@ -58,7 +58,6 @@ public class HTTPUtil {
                 urlNameString = url + "?" + sendParam;
             }
             System.out.println("-->>");
-            System.out.println("URL: " + urlNameString);
             URL realUrl = new URL(urlNameString);
             HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             connection.setRequestMethod("GET");

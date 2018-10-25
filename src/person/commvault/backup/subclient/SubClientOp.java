@@ -2,9 +2,8 @@ package person.commvault.backup.subclient;
 
 import access.vcenter.mob.Statistics2;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.zookeeper.Login;
 import person.commvault.backup.*;
-import person.commvault.backup.utils.LoginUtil;
+import person.commvault.backup.utils.XMLUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("传入的clientID错误");
         }
         String result = "";
-        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
         Map<String, String> params = new HashMap<>();
         params.put("clientId", clientId);
         result = httpUtil.doGet(url, headers, params);
@@ -46,7 +45,7 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("传入的clientID错误");
         }
         String result = "";
-        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
         Map<String, String> params = new HashMap<>();
         params.put("clientName", clientName);
         result = httpUtil.doGet(url, headers, params);
@@ -58,7 +57,7 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("传入的subclientId错误");
         }
 
-        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient/" + subclientId + "/action/backup?backupLevel=" + level.getLevel();
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient/" + subclientId + "/action/backup?backupLevel=" + level.getLevel();
 
         String result = "";
         result = httpUtil.doPostJson(url, headers, null);
@@ -68,7 +67,7 @@ public class SubClientOp extends BackUpBase {
 
     //查询子客户端关联的某一个虚机
     public String getVmBySubClientID(String subclientId) {
-        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient/"+ subclientId +"/Browse";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient/"+ subclientId +"/Browse";
         Map<String, String> params = new HashMap<>();
         params.put("path", "%5c" + "503c4f69-5bb7-9f4b-57fb-d0d98114f837");
         params.put("showDeletedFiles", "true");
@@ -78,7 +77,7 @@ public class SubClientOp extends BackUpBase {
     }
 
     public String createSubClient() {
-        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
         return "";
     }
 
@@ -90,11 +89,11 @@ public class SubClientOp extends BackUpBase {
             throw new Exception("error subclientId传入参数为空");
         }
         String path = "E:\\intell_space\\myTestDemo\\src\\person\\commvault\\backup\\subclient\\subclientBackupHistory.xml";
-        String xml = LoginUtil.getXml(path);
-        xml = LoginUtil.replaceXmlValue(xml, "clientId", clientId);
-        xml = LoginUtil.replaceXmlValue(xml, "subclientId", subclientId);
+        String xml = XMLUtil.getXml(path);
+        xml = XMLUtil.replaceXmlValue(xml, "clientId", clientId);
+        xml = XMLUtil.replaceXmlValue(xml, "subclientId", subclientId);
         String content = "";
-        String url = COMM_SERVER_URL + "/SearchSvc/CVWebService.svc/jobs";
+        String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/jobs";
         content = httpUtil.doPostXML(url, headers.get("Authtoken"), xml);
         return content;
     }

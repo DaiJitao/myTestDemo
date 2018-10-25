@@ -6,19 +6,23 @@ import java.util.Map;
 /**
  * Created by daijitao on 2018/10/15.
  */
-public class Common {
-    private static Common instance = new Common();
-    private Common() {
+public class CommConf {
+    private static CommConf instance = new CommConf();
+    private CommConf() {
 
     }
-    public static Common getInstance(){
+    public static CommConf getInstance(){
         return instance;
     }
 
     public Map<String, String> initUser(){
         Map<String, String> params = new HashMap<>();
-        params.put("username", "admin");
-        params.put("password", "UEBzc3cwcmQ=");
+        Configuration configuration = new Configuration();
+        configuration.init();
+        String username = configuration.getProperty("username");
+        String pwd = configuration.getProperty("password");
+        params.put("username", username);
+        params.put("password", pwd); // UEBzc3cwcmQ=
         return params;
     }
 
