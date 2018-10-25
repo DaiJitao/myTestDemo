@@ -9,6 +9,7 @@ import java.util.Map;
  * Created by daijitao on 2018/10/17.
  */
 public class VirtualMachine extends BackUpBase {
+
     public static void main(String[] args) throws Exception {
         VirtualMachine virtualMachine = new VirtualMachine();
         String result = virtualMachine.getNICs("192.168.56.128", "73", "");
@@ -21,7 +22,7 @@ public class VirtualMachine extends BackUpBase {
     /**
      * @param clientName
      * @param subClientID
-     * @param time  秒 可获取指定时间的网卡
+     * @param time        秒 可获取指定时间的网卡
      * @return
      */
     public String getNICs(String clientName, String subClientID, String time) throws Exception {
@@ -38,18 +39,16 @@ public class VirtualMachine extends BackUpBase {
         stringBuilder.append("\"/><paths path=\"\\\\\"/><timeRange toTime=\"");
         stringBuilder.append(time);
         stringBuilder.append("\" /></databrowse_BrowseRequest>");
-        System.out.println("发送的参数\n" +stringBuilder.toString());
         String token = headers.get("Authtoken");
         result = httpUtil.doPostXML(url, token, stringBuilder.toString());
         return result;
     }
 
     /**
-     *
      * @param applicationId
      * @param subClientID
      * @param time
-     * @param guid vcenter层面的instanceUuid
+     * @param guid          vcenter层面的instanceUuid
      * @return
      * @throws Exception
      */
@@ -69,15 +68,14 @@ public class VirtualMachine extends BackUpBase {
         stringBuilder.append("\"/><timeRange toTime=\"");
         stringBuilder.append(time);
         stringBuilder.append("\"/><options showDeletedFiles=\"1\" vsDiskBrowse=\"1\"/><mode mode=\"6\"/></databrowse_BrowseRequest>");
-        System.out.println("发送的参数\n" +stringBuilder.toString());
         String token = headers.get("Authtoken");
         result = httpUtil.doPostXML(url, token, stringBuilder.toString());
         return result;
     }
 
 
-    public Map<String, String> getParams(JSONObject jsonObject) throws Exception{
-        if (null == jsonObject){
+    public Map<String, String> getParams(JSONObject jsonObject) throws Exception {
+        if (null == jsonObject) {
             throw new Exception("jsonObject is NULL: error ");
         }
         return null;

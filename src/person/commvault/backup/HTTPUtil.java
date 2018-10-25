@@ -15,14 +15,15 @@ import java.util.Map;
  */
 public class HTTPUtil {
     private static HTTPUtil instance = new HTTPUtil();
+
     private HTTPUtil() {
 
     }
-    public static HTTPUtil getInstance(){
+
+    public static HTTPUtil getInstance() {
         return instance;
     }
-    public static String token = Token.getToken(Common.getInstance().initUser());
-    private static String subClientUrl = "http://192.168.20.53:81/SearchSvc/CVWebService.svc/Subclient";
+
 
     //获取所有的子客户端
 //    public void listSubclient(Map<String, String> headers, Map<String, String> params) {
@@ -56,22 +57,22 @@ public class HTTPUtil {
             if (sendParam.length() != 0) {
                 urlNameString = url + "?" + sendParam;
             }
+            System.out.println("-->>");
             System.out.println("URL: " + urlNameString);
             URL realUrl = new URL(urlNameString);
             HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             connection.setRequestMethod("GET");
-            // 设置通用的请求属性
             // connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            connection.setRequestProperty("Accept", headers.get("Accept")); // 设置接收数据的格式
-            connection.setRequestProperty("Content-Type", headers.get("Content-Type")); // 设置发送数据的格式
+            connection.setRequestProperty("Accept", headers.get("Accept"));
+            connection.setRequestProperty("Content-Type", headers.get("Content-Type"));
             connection.setRequestProperty("Authtoken", headers.get("Authtoken"));
-
+            System.out.println("Request: API=GET URL: " + urlNameString);
+            System.out.println("params: " + sendParam);
             connection.connect();
             int statusCode = connection.getResponseCode();
             String msg = connection.getResponseMessage();
-            System.out.println("statusCode: " + statusCode);
-            System.out.println("msg: " + msg);
-            // 定义 BufferedReader输入流来读取URL的响应
+            System.out.println("code: " + statusCode);
+            System.out.println("<<--");
             bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -79,11 +80,8 @@ public class HTTPUtil {
             }
 
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
             e.printStackTrace();
-        }
-        // 使用finally块来关闭输入流
-        finally {
+        } finally {
             try {
                 if (bufferedReader != null) {
                     bufferedReader.close();
@@ -108,18 +106,18 @@ public class HTTPUtil {
             URL realUrl = new URL(urlNameString);
             HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             connection.setRequestMethod("DELETE");
-            // 设置通用的请求属性
-            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            connection.setRequestProperty("Accept", headers.get("Accept")); // 设置接收数据的格式
-            connection.setRequestProperty("Content-Type", headers.get("Content-Type")); // 设置发送数据的格式
-            connection.setRequestProperty("Authtoken", headers.get("Authtoken"));
 
+            //connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty("Accept", headers.get("Accept"));
+            connection.setRequestProperty("Content-Type", headers.get("Content-Type"));
+            connection.setRequestProperty("Authtoken", headers.get("Authtoken"));
+            System.out.println("-->>");
+            System.out.println("Request: API=DELETE URL: " + realUrl);
+            System.out.println("params: " + sendParam);
             connection.connect();
             int statusCode = connection.getResponseCode();
-            String msg = connection.getResponseMessage();
-            System.out.println("statusCode: " + statusCode);
-            System.out.println("msg: " + msg);
-            // 定义 BufferedReader输入流来读取URL的响应
+            System.out.println("code: " + statusCode);
+            System.out.println("<<--");
             bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -127,11 +125,8 @@ public class HTTPUtil {
             }
 
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
             e.printStackTrace();
-        }
-        // 使用finally块来关闭输入流
-        finally {
+        } finally {
             try {
                 if (bufferedReader != null) {
                     bufferedReader.close();
@@ -156,7 +151,7 @@ public class HTTPUtil {
         InputStream is = null;
         String result = "";
         try {
-            URL url = new URL(strURL);// 创建连接
+            URL url = new URL(strURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true); // 允许写出
             connection.setDoInput(true); // 允许读入
@@ -164,35 +159,34 @@ public class HTTPUtil {
             connection.setInstanceFollowRedirects(true);
 
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Accept", headers.get("Accept")); // 设置接收数据的格式
-            connection.setRequestProperty("Content-Type", headers.get("Content-Type")); // 设置发送数据的格式
+            connection.setRequestProperty("Accept", headers.get("Accept"));
+            connection.setRequestProperty("Content-Type", headers.get("Content-Type"));
             connection.setRequestProperty("Authtoken", headers.get("Authtoken"));
-
+            System.out.println("Request: API=POST URL: " + strURL);
             connection.connect();
             out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
 
-            if (params.containsKey("jsonType")){
+            if (params.containsKey("jsonType")) {
                 out.append(params.get("jsonType"));
             } else {
                 out.append(JSON.toJSONString(params));//JSONUtil.object2JsonString(params));
             }
+            System.out.println("params: " + JSON.toJSONString(params));
             out.flush();
 
             int code = connection.getResponseCode();
-
+            System.out.println("code: " + code);
             if (code == 200) {
-                System.out.println("statusCode:"+code);
+                System.out.println("statusCode:" + code);
                 is = connection.getInputStream();
             } else {
-                System.out.println("statusCode:"+code);
-                System.out.println("msg: " + connection.getResponseMessage());
                 is = connection.getErrorStream();
             }
 
             // 读取响应
-            int length = connection.getContentLength();// 获取长度
+            int length = connection.getContentLength();
             if (length != -1) {
-                byte[] data = new byte[length]; // 目的数组
+                byte[] data = new byte[length];
                 byte[] temp = new byte[512];
                 int readLen = 0;
                 int destPos = 0;
@@ -200,7 +194,7 @@ public class HTTPUtil {
                     System.arraycopy(temp, 0, data, destPos, readLen);
                     destPos += readLen;
                 }
-                result = new String(data, "UTF-8"); // utf-8编码
+                result = new String(data, "UTF-8");
             }
 
         } catch (IOException e) {
@@ -220,28 +214,29 @@ public class HTTPUtil {
         OutputStreamWriter out = null;
         InputStream is = null;
         try {
-            URL url = new URL(strURL);// 创建连接
+            URL url = new URL(strURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true); // 允许写出
-            connection.setDoInput(true); // 允许读入
-            connection.setUseCaches(false);// 不适用缓存
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setUseCaches(false);
             connection.setInstanceFollowRedirects(true);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/json");
+            System.out.println("Request: API=POST URL: " + url);
             connection.connect();
             out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
 
-            if (params.containsKey("jsonType")){
+            if (params.containsKey("jsonType")) {
                 out.append(params.get("jsonType"));
             } else {
                 out.append(JSON.toJSONString(params));//JSONUtil.object2JsonString(params));
             }
+            System.out.println("params: " + JSON.toJSONString(params));
             out.flush();
 
-
             int code = connection.getResponseCode();
-
+            System.out.println("code: " + code);
             if (code == 200) {
                 is = connection.getInputStream();
             } else {
@@ -249,9 +244,9 @@ public class HTTPUtil {
             }
 
             // 读取响应
-            int length = connection.getContentLength();// 获取长度
+            int length = connection.getContentLength();
             if (length != -1) {
-                byte[] data = new byte[length]; // 目的数组
+                byte[] data = new byte[length];
                 byte[] temp = new byte[512];
                 int readLen = 0;
                 int destPos = 0;
@@ -259,7 +254,7 @@ public class HTTPUtil {
                     System.arraycopy(temp, 0, data, destPos, readLen);
                     destPos += readLen;
                 }
-                String result = new String(data, "UTF-8"); // utf-8编码
+                String result = new String(data, "UTF-8");
                 return result;
             }
 
@@ -280,23 +275,25 @@ public class HTTPUtil {
         OutputStreamWriter out = null;
         InputStream is = null;
         try {
-            URL url = new URL(strURL);// 创建连接
+            URL url = new URL(strURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true); // 允许写出
-            connection.setDoInput(true); // 允许读入
-            connection.setUseCaches(false);// 不适用缓存
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setUseCaches(false);
             connection.setInstanceFollowRedirects(true);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Content-Type", "application/xml");
             connection.setRequestProperty("Authtoken", token);
             connection.connect();
+            System.out.println("Request: API=POST URL: " + strURL);
+            System.out.println("params: " + params);
             out = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
             out.append(params);//JSONUtil.object2JsonString(params));
             out.flush();
 
             int code = connection.getResponseCode();
-            System.out.println("code:" + code);
+            System.out.println("code: " + code);
             if (code == 200) {
                 is = connection.getInputStream();
             } else {
@@ -304,9 +301,9 @@ public class HTTPUtil {
             }
 
             // 读取响应
-            int length = connection.getContentLength();// 获取长度
+            int length = connection.getContentLength();
             if (length != -1) {
-                byte[] data = new byte[length]; // 目的数组
+                byte[] data = new byte[length];
                 byte[] temp = new byte[512];
                 int readLen = 0;
                 int destPos = 0;
@@ -314,7 +311,7 @@ public class HTTPUtil {
                     System.arraycopy(temp, 0, data, destPos, readLen);
                     destPos += readLen;
                 }
-                String result = new String(data, "UTF-8"); // utf-8编码
+                String result = new String(data, "UTF-8");
                 return result;
             }
 
