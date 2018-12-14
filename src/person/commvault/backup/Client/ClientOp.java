@@ -12,8 +12,8 @@ public class ClientOp extends BackUpBase {
 
     public static void main(String[] args) {
         System.out.println(new ClientOp().getClients());
-        System.out.println(new ClientOp().getClientsByVSPseudo(true));
-        System.out.println(new ClientOp().getClientsByVSPseudo(false));
+        //System.out.println(new ClientOp().getClientsByVSPseudo(true));
+        // System.out.println(new ClientOp().getClientsByVSPseudo(false));
     }
 
     public String getClients() {

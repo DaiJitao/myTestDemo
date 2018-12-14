@@ -9,6 +9,9 @@ import java.util.Map;
  * Created by daijitao on 2018/10/16.
  */
 public class BackupSetOp extends BackUpBase {
+    public static void main(String[] args) throws Exception {
+        System.out.println(new BackupSetOp().getBackupSetByClientId("4"));
+    }
 
     // 通过客户端Id 查询所有的备份集
     public String getBackupSetByClientId(String clientId) throws Exception {

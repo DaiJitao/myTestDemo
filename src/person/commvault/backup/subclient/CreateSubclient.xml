@@ -1,0 +1,23 @@
+<App_CreateSubClientRequest>
+    <subClientProperties>
+        <subClientEntity>
+            <appName>%appName%</appName>
+            <backupsetName>%backupsetName%</backupsetName>
+            <clientName>%clientName%</clientName>
+            <instanceName>%instanceName%</instanceName>
+            <subclientName>%subclientName%</subclientName>
+        </subClientEntity>
+        <vmContentOperationType>ADD</vmContentOperationType>
+        <commonProperties>
+            <enableBackup>true</enableBackup>
+            <storageDevice>
+                <dataBackupStoragePolicy>
+                    <storagePolicyName>%storagePolicyName%</storagePolicyName>
+                </dataBackupStoragePolicy>
+            </storageDevice>
+        </commonProperties>
+        <vmContent>
+            <children type="VMName" displayName="%vmName%" equalsOrNotEquals="1"/>
+        </vmContent>
+    </subClientProperties>
+</App_CreateSubClientRequest>

@@ -18,13 +18,17 @@ public class SubClientOp extends BackUpBase {
         System.out.println("所有的虚机");
         Statistics2.printAllVms();
         SubClientOp subClientOp = new SubClientOp();
-        String result = subClientOp.getSubclientByClientName("192.168.56.128");
+//        String result = subClientOp.getSubclientByClientName("192.168.56.128");
+//
+//        System.out.println("所有的子客户端 " + result);
+//        String result2 = subClientOp.getVmBySubClientID("73");
+//        System.out.println("子客户端关联的虚机 " + result2);
+//        result2 = subClientOp.getBackupHistory("4", "73");
+//        System.out.println(JSONObject.parseObject(result2));
 
-        System.out.println("所有的子客户端 " + result);
-        String result2 = subClientOp.getVmBySubClientID("73");
-        System.out.println("子客户端关联的虚机 " + result2);
-        result2 = subClientOp.getBackupHistory("4", "73");
-        System.out.println(JSONObject.parseObject(result2));
+        String result = subClientOp.createSubClient();
+
+        System.out.println(JSONObject.parseObject(result));
 
     }
 
@@ -78,7 +82,31 @@ public class SubClientOp extends BackUpBase {
 
     public String createSubClient() {
         String url = CommVault_SERVER_URL + "/SearchSvc/CVWebService.svc/Subclient";
-        return "";
+        String xml = "<App_CreateSubClientRequest>\n" +
+                "    <subClientProperties>\n" +
+                "\t<subClientEntity>\n" +
+                "\t<appName>Virtual Server</appName>\n" +
+                "\t<backupsetName>defaultBackupSet</backupsetName>\n" +
+                "\t<clientName>192.168.56.128</clientName>\n" +
+                "\t<instanceName>VMware</instanceName>\n" +
+                "\t<subclientName>Dev-SX-Commvault-Test-002</subclientName>\n" +
+                "\t</subClientEntity>\n" +
+                "\t<vmContentOperationType>ADD</vmContentOperationType>\n" +
+                "\t<commonProperties>\n" +
+                "\t<enableBackup>true</enableBackup>\n" +
+                "\t<storageDevice>\n" +
+                "\t<dataBackupStoragePolicy>\n" +
+                "\t<storagePolicyName>1_circle_14days</storagePolicyName>\n" +
+                "\t</dataBackupStoragePolicy>\n" +
+                "\t</storageDevice>\n" +
+                "\t</commonProperties>\n" +
+                "\t<vmContent>\n" +
+                "\t<children type=\"VMName\" displayName=\"Dev-SX-Commvault-Test-002\" equalsOrNotEquals=\"1\"/>\n" +
+                "\t</vmContent>\n" +
+                "    </subClientProperties>\n" +
+                "</App_CreateSubClientRequest>";
+        String content = httpUtil.doPostXML(url, headers.get("Authtoken"), xml);
+        return content;
     }
 
     public String getBackupHistory(String clientId, String subclientId) throws Exception{
