@@ -1,0 +1,7 @@
+<databrowse_BrowseRequest opType="0">
+    <entity subclientId="%subclientId%" applicationId="106"/>
+    <paths path="\\%GUID%"/>
+    <timeRange toTime="%toTime%"/>
+    <options showDeletedFiles="1" vsDiskBrowse="1"/>
+    <mode mode="6"/>
+</databrowse_BrowseRequest>
