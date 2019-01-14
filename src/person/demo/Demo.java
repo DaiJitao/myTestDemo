@@ -7,6 +7,9 @@ import java.util.Scanner;
  */
 public class Demo {
     public static void main(String[] args) {
+        System.out.println(Double.MIN_NORMAL);
+    }
+    public static void main2(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String str;
         while (true){

@@ -9,10 +9,13 @@ import com.vmware.vim25.mo.ServiceInstance;
 import com.vmware.vim25.mo.VirtualMachine;
 
 public class Statistics2 {
+	public static void main(String[] args) {
+		Statistics2.printAllVms();
+	}
 	public static void printAllVms() {
 		try{
-				String VC_IP="192.168.56.128";
-				String VC_NAME="dev-wcw";
+				String VC_IP="192.168.253.218"; // 192.168.56.128 dev-wcw P@ssw0rd
+				String VC_NAME="administrator@vsphere.local";
 				String VC_PWD="P@ssw0rd";
 				String VC_URL="https://"+ VC_IP + "/sdk";
 
